@@ -1,0 +1,292 @@
+<MDScreen>:
+    transition: "FadeTransition"
+
+MDScreenManager:
+
+######################## Main menu #########################################
+
+    MDScreen:
+        name: "Main menu"
+
+        MDAnchorLayout:
+            md_bg_color: self.theme_cls.backgroundColor
+
+            MDBoxLayout:
+                orientation: 'vertical'
+                size_hint: None, None
+                adaptive_size: True
+                spacing: "30dp"
+
+                MDLabel:
+                    text: "OmaRutiini"
+                    #Positioning
+                    halign: "center"
+                    pos_hint: {"center_x": .5}
+                    #size
+                    adaptive_size: True
+                    #padding: "10dp", "10dp", "10dp", "10dp"
+                    #Font size
+                    font_style: "Headline"
+                    role: "large"
+                    radius: "30px"      
+
+                MDButton:
+                    pos_hint: {"center_x": .5}
+                    on_release: root.current = "routines"
+
+                    MDButtonText:
+                        text: "Näytä rutiinit"
+                        halign: "center"
+                        font_style: "Title"
+
+                MDButton:
+                    pos_hint: {"center_x": .5}
+                    on_release: root.current = "edit routines"
+
+                    MDButtonText:
+                        text: "Muokkaa rutiineja"
+                        halign: "center"
+                        font_style: "Title"
+                
+                MDButton:
+                    pos_hint: {"center_x": .5}
+
+                    MDButtonText:
+                        text: "Uusi tapahtuma"
+                        halign: "center"
+                        font_style: "Title"
+
+                    MDButtonIcon:
+                        icon: "plus"
+
+                MDButton:
+                    #   Center
+                    pos_hint: {"center_x": .5}
+                    # Go to settings
+                    on_release: root.current = "settings"
+
+                    MDButtonText:
+                        text: "Asetukset"
+                        halign: "center"
+                        font_style: "Title"
+
+
+############################### Routines #############################################
+
+    MDScreen:
+        name: "routines"
+
+        MDAnchorLayout:
+            md_bg_color: self.theme_cls.backgroundColor 
+            padding: "5dp", "15dp", "5dp", "15dp"
+
+            MDBoxLayout:
+                orientation: 'vertical'
+                spacing: "20dp"  # This adds space between all child widgets
+
+                MDLabel:
+                    text: "Rutiinit"
+                    #Font
+                    font_style: "Headline"
+                    role: "large"
+                    
+                    #Positioning
+                    halign: "center"
+                    adaptive_height: True
+
+                #Routines go here
+                MDScrollView:
+                    do_scroll_x: False
+
+                    MDBoxLayout:
+                        id: main_scroll
+                        orientation: "vertical"
+                        adaptive_height: True
+
+                MDButton:
+                    pos_hint: {"center_x": .5}
+                    on_release: root.current = "Main menu"
+                    adaptive_size: True
+
+                    MDButtonText:
+                        text: "Etusivulle"
+                        halign: "center"
+                        font_style: "Title"
+                        border_margin: "30dp"
+
+############################## Edit Routines ###################################################
+
+    MDScreen:
+        name: "edit routines"
+
+        MDAnchorLayout:
+            md_bg_color: self.theme_cls.backgroundColor 
+            padding: "5dp", "15dp", "5dp", "15dp"
+
+            MDBoxLayout:
+                orientation: 'vertical'
+                size_hint: None, None
+                adaptive_height: True
+                width: "300dp"
+                spacing: "30dp"
+
+                MDLabel:
+                    text: "Rutiinit"
+                    #Font
+                    font_style: "Headline"
+                    role: "large"
+                    underline: False
+                    
+                    #Positioning
+                    halign: "center"
+                    adaptive_height: True
+
+                MDBoxLayout:
+                    orientation: "vertical"
+                    size_hint_y: None  # This prevents automatic stretching
+                    height: self.minimum_height  # Makes sure it only takes needed space
+                    spacing: "20dp"
+                    size_hint_x: 1
+                    pos_hint: {'center_x': 0.5}
+
+                    MDButton:
+                        id: weekday_picker_btn
+
+                        # Position
+                        pos_hint: {"center_x": .5}
+
+                        # action
+                        on_release: app.pick_weekday_open()
+
+                        MDButtonText:
+                            id: weekday_picker_btn_text
+                            text: "Valitse päivä"
+                            halign: "center"
+                            font_style: "Title"
+                    
+                    MDButton:
+                        id: time_of_day_picker_btn
+                        pos_hint: {"center_x": .5}
+                        on_release: app.pick_time_of_day_open()
+
+                        MDButtonText:
+                            id: time_of_day_picker_text
+                            text: "Aamupäivä / Iltapäivä"
+                            halign: "center"
+                            font_style: "Title"
+                    
+                    MDTextField:
+                        id: rutiini_teksti
+                        mode: "outlined"
+                        radius: 30
+                        required: True
+
+                        # Sizing
+                        size_hint: None, None
+                        size: "300dp", "300dp"
+
+                        # Positioning
+                        pos_hint: {"center_x":0.5}
+
+                        MDTextFieldLeadingIcon:
+                            icon: "fountain-pen"
+                        
+                        MDTextFieldHintText:
+                            text: "Rutiinin kuvaus"
+
+                MDButton:
+                    pos_hint: {"center_x": .5}
+                    on_release: app.save_new_routine()
+                    adaptive_size: True
+                    border_margin: "10dp"
+
+                    MDButtonText:
+                        text: "Tallenna muutokset"
+                        halign: "center"
+                        font_style: "Title"
+                        role: "large"
+                        
+                MDButton:
+                    pos_hint: {"center_x": .5}
+                    on_release: root.current = "Main menu"
+                    adaptive_size: True
+                    border_margin: "10dp"
+
+                    MDButtonText:
+                        text: "Etusivulle"
+                        halign: "center"
+                        font_style: "Title"
+                        role: "large"
+                        
+
+
+
+############################## Settings ###################################################
+
+    MDScreen:
+        name: "settings"
+
+        MDAnchorLayout:
+            md_bg_color: self.theme_cls.backgroundColor
+
+            MDBoxLayout:
+                orientation: 'vertical'
+                size_hint: None, None
+                adaptive_size: True
+                spacing: "30dp"
+
+                MDLabel:
+                    text: "Asetukset"
+                    #Positioning
+                    size_hint_y: None
+                    halign: "center"
+                    pos_hint: {"center_x": .5}
+                    adaptive_size: True
+                    #Font size
+                    font_style: "Display"
+                    role: "large"     
+
+                MDButton:
+                    id: theme_picker_btn
+                    #Center
+                    pos_hint: {"center_x": .5}
+                    # On push, change theme: dark <-> light
+                    on_release: app.theme_picker_open()
+
+                    MDButtonText:
+                        text: "Vaihda väripalettia"
+                        halign: "center"
+                        font_style: "Title"     
+
+                MDButton:
+                    #Center
+                    pos_hint: {"center_x": .5}
+                    # On push, change theme: dark <-> light
+                    on_release: app.toggle_dark_mode()
+
+                    MDButtonText:
+                        id: dark_mode_btn
+                        text: "Pimeätila pois"
+                        halign: "center"
+                        font_style: "Title"
+                
+                MDButton:
+                    #Center
+                    pos_hint: {"center_x": .5}
+                    # On push, change theme: dark <-> light
+                    on_release: app.save_data()
+
+                    MDButtonText:
+                        text: "Tallenna tiedot"
+                        halign: "center"
+                        font_style: "Title"  
+
+                MDButton:
+                    pos_hint: {"center_x": .5}
+                    on_release: root.current = "Main menu"
+
+                    MDButtonText:
+                        text: "Etusivulle"
+                        halign: "center"
+                        font_style: "Title"
+
